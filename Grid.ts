@@ -12,6 +12,10 @@ class Grid {
     this.cells = cells || <GridArray> afl(rows, () => afl(cols, () => false));
   }
 
+  get(row: number, col: number): boolean {
+    return this.cells[row][col];
+  }
+
   set(row: number, col: number, value: boolean) {
     this.cells[row][col] = value;
   }
@@ -49,14 +53,4 @@ class Grid {
 
     return n;
   }
-}
-
-const grid = new Grid(3, 3);
-[[0, 1], [1, 1], [2, 1],].forEach(([row, col]) => {
-  grid.set(row, col, true);
-});
-
-for (let i = 0; i < 3; i++) {
-  console.log(grid);
-  grid.advance();
 }
