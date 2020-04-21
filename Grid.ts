@@ -37,16 +37,16 @@ class Grid {
   private countNeighbors(row: number, col: number): number {
     let n = 0;
 
-    const neighbors = [
+    const neighborOffsets = [
       [-1, -1], [-1, 0], [-1, 1],
       [ 0, -1],          [ 0, 1],
       [ 1, -1], [ 1, 0], [ 1, 1],
     ];
-    neighbors.forEach(([colOff, rowOff]) => {
+    neighborOffsets.forEach(([colOff, rowOff]) => {
       const neighborCol = col + colOff;
       const neighborRow = row + rowOff;
       const invalidOffsets = neighborCol < 0 || neighborRow < 0 ||
-        neighborCol > this.cols - 1 || neighborRow > this.rows - 1;
+        neighborCol >= this.cols || neighborRow >= this.rows;
       if (! invalidOffsets && this.cells[neighborRow][neighborCol])
         ++n;
     });
