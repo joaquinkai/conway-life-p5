@@ -56,7 +56,9 @@ new p5(p => {
 
     for (let row = 0; row < ROWS; ++row) {
       for (let col = 0; col < COLS; ++col) {
-        const alive = grid.get(row, col)[0];
+        const alive = grid.get(row, col);
+        const pa = grid.getPrev(row, col);
+        const prevAlive = pa === null ? alive : pa;
         const aliveIndex = alive ? 0 : 1;
         const stroke = strokes[aliveIndex];
         if (stroke) p.stroke(stroke); else p.noStroke();
@@ -65,7 +67,9 @@ new p5(p => {
         p.translate(leftMargin + col * cellSize, topMargin + row * cellSize, 0);
         const s = cellSize * 0.8;
         const maxAliveCellHeight = s / 3;
-        p.box(s, s, alive ? maxAliveCellHeight : 0);
+        p.box(s, s, alive || prevAlive ?
+          maxAliveCellHeight * (alive === prevAlive ? 1 : transitionProgress) :
+          0);
         p.pop();
       }
     }
